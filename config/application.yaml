@@ -1,0 +1,8 @@
+app_name: Sample App
+version: 1.0.0
+env: dev
+
+BUCKETEER_AWS_ACCESS_KEY_ID: xxxxxxxxxx
+BUCKETEER_AWS_REGION: us-east-1
+BUCKETEER_AWS_SECRET_ACCESS_KEY: xxxxx
+BUCKETEER_BUCKET_NAME: xxxxxx

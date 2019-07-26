@@ -1,0 +1,51 @@
+<head>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.12.0/d3.min.js" type="text/JavaScript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+</head>
+
+<body>
+
+  <div id="vue">
+    <svg id="circle-001" :width="width" :height="height"></svg>
+    <div>r: {{ r }}</div>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#vue',
+      data: {
+        width: 500,
+        height: 500,
+        r: 175
+      },
+      mounted: function(){
+        var projection = d3.geoAlbersUsa();
+        var path = d3.geoPath().projection(projection);
+        var svg = d3.select('#circle-001');
+
+        d3.json('http://localhost:8080/d3_map/us.json', function (error, us) {
+          console.log("*****************************************************")
+          console.log("error=", error)
+          console.log("us=", us)
+          var g = svg.append('g');
+          g.selectAll('.state')
+            .data(topojson.feature(us, us.objects.usStates).features)
+            // .data(us.features)
+            .enter()
+            .append("path")
+            .attr("class", "state")
+            .attr("d", path)
+            .on('mouseover', function (d) {
+              v.$emit('stateSelected', d.properties.STATE_ABBR)
+            })
+            .on('mouseout', function (d) {
+              v.$emit('stateDeselected', d.properties.STATE_ABBR)
+            })
+          g.attr('transform', 'scale(0.57)')
+        });
+      }
+    })
+  </script>
+
+</body>
