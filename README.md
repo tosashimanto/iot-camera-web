@@ -3,4 +3,4 @@
 
 #### Echo + Gorm
 
-![image](documents/images/IoTCamera_summary.png)
+![image](_documents/images/IoTCamera_summary.png)
